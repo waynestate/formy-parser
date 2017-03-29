@@ -1,0 +1,25 @@
+{
+    "name": "waynestate/formy-parser",
+    "description": "Parses a string for formy elements and converts the string to an HTML form",
+    "version": "1.0.0",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Web Communications",
+            "email": "web@wayne.edu"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4":{
+            "Waynestate\\FormyParser\\":"src"
+        }
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "waynestate/string-middleware": "~1.1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.5"
+    }
+}
