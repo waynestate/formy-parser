@@ -51,7 +51,10 @@ class Parser implements StringParserInterface {
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $build_post);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
+            if(isset($_COOKIE['PHPSESSID']) && $_COOKIE['PHPSESSID'] != '') {
+                curl_setopt($ch, CURLOPT_COOKIE, 'PHPSESSID=' . $_COOKIE['PHPSESSID']);
+                session_write_close();
+            }
             $info['form'] = curl_exec($ch);
             curl_close($ch);
 
