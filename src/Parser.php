@@ -6,7 +6,8 @@ use Waynestate\StringParser\StringParserInterface;
  * Class ContentMiddleware
  * @package ContentMiddleware
  */
-class Parser implements StringParserInterface {
+class Parser implements StringParserInterface
+{
 
     /**
      * @param string $string
@@ -18,24 +19,28 @@ class Parser implements StringParserInterface {
         $includes = $this->findIncludes($string);
 
         // For every form replace the embed
-        foreach((array)$includes as $include)
-        {
+        foreach ((array)$includes as $include) {
             // Start building the post
-            $build_post = array('formy_permalink' => $include['id'], 'formy_database' => ((!isset($include['database']) || $include['database'] == '')?'prod':$include['database']), 'formy_button' => (!isset($include['button']) || $include['button']) ? '' : $include['button'], 'formy_responsive' => (!isset($include['responsive']) || $include['responsive'] == '') ? 'foundation4' : $include['responsive'], 'formy_form_action' => $_SERVER['REQUEST_URI'], 'formy_http_referrer' => $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], 'submission_ip' => $_SERVER['REMOTE_ADDR']);
+            $build_post = array(
+                'formy_permalink' => $include['id'],
+                'formy_database' => ((!isset($include['database']) || $include['database'] == '') ? 'prod' : $include['database']),
+                'formy_button' => (!isset($include['button']) || $include['button']) ? '' : $include['button'],
+                'formy_responsive' => (!isset($include['responsive']) || $include['responsive'] == '') ? 'foundation4' : $include['responsive'],
+                'formy_form_action' => $_SERVER['REQUEST_URI'],
+                'formy_http_referrer' => $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                'submission_ip' => (!empty($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR']),
+            );
 
             // Serialize post since CURL does not handle multi dimensional arrays well
-            if(is_array($_POST))
-            {
+            if (is_array($_POST)) {
                 $build_post['serialized_data'] = serialize($_POST);
             }
 
             // Add in the $_FILES
-            if(is_array($_FILES) && count($_FILES) > 0)
-            {
-                foreach ($_FILES as $field_id => $file)
-                {
+            if (is_array($_FILES) && count($_FILES) > 0) {
+                foreach ($_FILES as $field_id => $file) {
                     // Only add if the file upload was OK
-                    if($file['error'] == 0) {
+                    if ($file['error'] == 0) {
                         $build_post[$field_id] = new \CURLFile($file['tmp_name'], $file['type'], basename($file['name']));
                     }
                 }
@@ -53,8 +58,8 @@ class Parser implements StringParserInterface {
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
             $session_name = ini_get('session.name');
-            if(isset($_COOKIE[$session_name]) && $_COOKIE[$session_name] != '') {
-                curl_setopt($ch, CURLOPT_COOKIE, $session_name.'='.$_COOKIE[$session_name]);
+            if (isset($_COOKIE[$session_name]) && $_COOKIE[$session_name] != '') {
+                curl_setopt($ch, CURLOPT_COOKIE, $session_name . '=' . $_COOKIE[$session_name]);
                 session_write_close();
             }
             $info['form'] = curl_exec($ch);
@@ -80,7 +85,7 @@ class Parser implements StringParserInterface {
         preg_match_all("/\[(.*)\]/", $string, $find_includes);
 
         // Loop through the includes (From above) and replace them
-        if(is_array($find_includes[1]) && count($find_includes[1]) > 0) {
+        if (is_array($find_includes[1]) && count($find_includes[1]) > 0) {
             foreach ($find_includes[1] as $key => $find) {
                 $attribs = [];
 
@@ -110,7 +115,7 @@ class Parser implements StringParserInterface {
                 $attribs['include'] = '[' . $find . ']';
 
                 // Only add it in if the type is "form"
-                if($attribs['type'] == 'form')
+                if ($attribs['type'] == 'form')
                     $all_includes[] = $attribs;
             }
         }

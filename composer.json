@@ -1,7 +1,7 @@
 {
     "name": "waynestate/formy-parser",
     "description": "Parses a string for formy elements and converts the string to an HTML form",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "license": "MIT",
     "authors": [
         {
@@ -11,8 +11,8 @@
     ],
     "minimum-stability": "stable",
     "autoload": {
-        "psr-4":{
-            "Waynestate\\FormyParser\\":"src"
+        "psr-4": {
+            "Waynestate\\FormyParser\\": "src"
         }
     },
     "require": {
