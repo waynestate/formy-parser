@@ -1,8 +1,7 @@
 Formy Parser
 ================
 
-Parses a string for formy elements and converts the string to an HTML form Edit
-Add topics
+Parses a string for formy elements and converts the string to an HTML form Edit Add topics
 
 Installation
 -----

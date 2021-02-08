@@ -11,8 +11,8 @@
     ],
     "minimum-stability": "stable",
     "autoload": {
-        "psr-4":{
-            "Waynestate\\FormyParser\\":"src"
+        "psr-4": {
+            "Waynestate\\FormyParser\\": "src"
         }
     },
     "require": {
