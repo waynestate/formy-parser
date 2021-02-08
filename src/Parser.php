@@ -21,7 +21,15 @@ class Parser implements StringParserInterface {
         foreach((array)$includes as $include)
         {
             // Start building the post
-            $build_post = array('formy_permalink' => $include['id'], 'formy_database' => ((!isset($include['database']) || $include['database'] == '')?'prod':$include['database']), 'formy_button' => (!isset($include['button']) || $include['button']) ? '' : $include['button'], 'formy_responsive' => (!isset($include['responsive']) || $include['responsive'] == '') ? 'foundation4' : $include['responsive'], 'formy_form_action' => $_SERVER['REQUEST_URI'], 'formy_http_referrer' => $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], 'submission_ip' => $_SERVER['REMOTE_ADDR']);
+            $build_post = array(
+                'formy_permalink' => $include['id'],
+                'formy_database' => ((!isset($include['database']) || $include['database'] == '')?'prod':$include['database']),
+                'formy_button' => (!isset($include['button']) || $include['button']) ? '' : $include['button'],
+                'formy_responsive' => (!isset($include['responsive']) || $include['responsive'] == '') ? 'foundation4' : $include['responsive'],
+                'formy_form_action' => $_SERVER['REQUEST_URI'],
+                'formy_http_referrer' => $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'],
+                'submission_ip' => $_SERVER['REMOTE_ADDR']
+            );
 
             // Serialize post since CURL does not handle multi dimensional arrays well
             if(is_array($_POST))

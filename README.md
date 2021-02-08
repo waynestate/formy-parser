@@ -1,4 +1,4 @@
-Content Parser
+Formy Parser
 ================
 
 Parses a string for formy elements and converts the string to an HTML form Edit
@@ -7,7 +7,7 @@ Add topics
 Installation
 -----
 
-    composer require waynestate/content-parser
+    composer require waynestate/formy-parser
 
 Usage
 -----
