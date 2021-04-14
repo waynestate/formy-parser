@@ -28,7 +28,8 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $this->parser = new Waynestate\FormyParser\Parser;
 
         // Define the permalink to test against
-        $this->permalink = 'undergrad';
+        $this->permalink_undergradute = 'undergrad';
+        $this->permalink_graduate = 'graduate';
     }
 
     /**
@@ -46,7 +47,7 @@ class ParserTest extends PHPUnit_Framework_TestCase
      */
     public function parsing_embed_should_have_html_form()
     {
-        $result = $this->parser->parse('[form id="' . $this->permalink . '"]');
+        $result = $this->parser->parse('[form id="' . $this->permalink_undergradute . '"]');
 
         $this->assertContains('<form', $result);
     }
@@ -56,8 +57,19 @@ class ParserTest extends PHPUnit_Framework_TestCase
      */
     public function parsing_embed_with_paragraph_tags_should_strip_paragraph_tags()
     {
-        $result = $this->parser->parse('<p>[form id="' . $this->permalink . '"]</p>');
+        $result = $this->parser->parse('<p>[form id="' . $this->permalink_undergradute . '"]</p>');
 
         $this->assertTrue(substr($result, 0, 3) != '<p>', $result);
+    }
+
+    /**
+     * @test
+     */
+    public function findincludes_should_parse_multiple_forms()
+    {
+        $result = $this->parser->findIncludes('[No Form]<p>[form id="' . $this->permalink_undergradute . '"]</p><p>[form id="'.$this->permalink_graduate.'"]</p>');
+
+        $this->assertEquals($result[0]['id'], $this->permalink_undergradute);
+        $this->assertEquals($result[1]['id'], $this->permalink_graduate);
     }
 }
