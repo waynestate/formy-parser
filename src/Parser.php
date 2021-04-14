@@ -76,13 +76,13 @@ class Parser implements StringParserInterface
      * @param string $string
      * @return array
      */
-    private function findIncludes($string)
+    public function findIncludes($string)
     {
         // This holds all the includes found
         $all_includes = [];
 
         // Find all the includes within the page content
-        preg_match_all("/\[(.*)\]/", $string, $find_includes);
+        preg_match_all("/\[(form id.+?)\]/", $string, $find_includes);
 
         // Loop through the includes (From above) and replace them
         if (is_array($find_includes[1]) && count($find_includes[1]) > 0) {
