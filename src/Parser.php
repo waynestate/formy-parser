@@ -49,9 +49,11 @@ class Parser implements StringParserInterface
             // Version of the output
             $version = (defined('FORMY_OUTPUT_VERSION') == true) ? FORMY_OUTPUT_VERSION . '/' : '';
 
+            $query = (!empty($include['query']) ? '?' . $include['query'] : '');
+
             // Curl the permalink/embed URL to get the raw html
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, 'https://forms.wayne.edu/' . $include['id'] . '/html/' . $version);
+            curl_setopt($ch, CURLOPT_URL, 'https://forms.wayne.edu/' . $include['id'] . '/html/' . $version . $query);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $build_post);

@@ -1,7 +1,7 @@
 {
     "name": "waynestate/formy-parser",
     "description": "Parses a string for formy elements and converts the string to an HTML form",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "license": "MIT",
     "authors": [
         {
